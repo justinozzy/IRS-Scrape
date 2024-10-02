@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename= 'css/style.css') }}"
+    />
+    <title>FlaskBlog</title>
+  </head>
+  <body>
+    <h1>Welcome to FlaskBlog</h1>
+    <div>
+      {% for provider in providers %}
+      <h2>{{ provider[0] }}</h2>
+      {% endfor %}
+    </div>
+  </body>
+</html>
