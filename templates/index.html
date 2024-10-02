@@ -6,14 +6,76 @@
       rel="stylesheet"
       href="{{ url_for('static', filename= 'css/style.css') }}"
     />
-    <title>FlaskBlog</title>
+    <title>IRS E-File Providers</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
-    <h1>Welcome to FlaskBlog</h1>
-    <div>
-      {% for provider in providers %}
-      <h2>{{ provider[0] }}</h2>
-      {% endfor %}
-    </div>
+    <form action="{{ url_for('get_providers') }}" method="GET">
+      <label for="zipCode">Zip Code:</label>
+      <input type="text" id="zipCode" name="zipCode" /><br />
+      <label for="state">Select State:</label>
+      <select id="state" name="state">
+        {% for state in states %}
+        <option value="{{ state.value }}">
+          {{ state.name.replace('_', ' ').title() }}
+        </option>
+        {% endfor %}</select
+      ><br />
+      <input type="submit" value="Submit" />
+    </form>
+    <br />
+    <label for="sort">Sort By:</label>
+    <select id="sort" name="sort">
+      <option value="zip">Zip Code</option>
+      <option value="name">Business Name</option>
+      <option value="contact">Point of Contact</option>
+    </select>
+    {% if providers %}
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Name of Business</th>
+          <th>Address</th>
+          <th>City/State/Zip</th>
+          <th>Point of Contact</th>
+          <th>Telephone</th>
+          <th>Type of Service</th>
+        </tr>
+      </thead>
+      <tbody id="providers">
+        {% for provider in providers %}
+        <tr>
+          <td>{{ provider[0] }}</td>
+          <td>{{ provider[1] }}</td>
+          <td>{{ provider[2] }}</td>
+          <td>{{ provider[3] }}</td>
+          <td>{{ provider[4] }}</td>
+          <td>{{ provider[5] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+
+    <!-- Script to update page when a new sorting option is selected without refresh -->
+    <script>
+      // Wait until document is fully loaded before we are allowed to sort
+      $(document).ready(function () {
+        // Listen to when the sort dropdown menu changes and get its value
+        $("#sort").change(function () {
+          let sortValue = $(this).val();
+
+          // Send AJAX request to backend (flask) and sort the data using sort_providers() function
+          $.ajax({
+            url: "{{ url_for('sort_providers') }}",
+            type: "GET",
+            data: { sort_by: sortValue },
+            success: function (response) {
+              $("#providers").html(response);
+            },
+          });
+        });
+      });
+    </script>
   </body>
 </html>
