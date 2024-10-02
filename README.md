@@ -3,10 +3,12 @@
 Gathers information from [IRS E-File providers](https://www.irs.gov/e-file-providers/authorized-irs-e-file-providers-for-individuals) based on zip code and state then displays that information and allows for sorting on different parameters.
 
 ### Installation Pre-requisites
-- [Python 3.10.*](https://www.python.org/downloads/release/python-31012/)
+
+- [Python 3.12.7](https://www.python.org/downloads/release/python-3127/)
 - [Pipenv](https://pypi.org/project/pipenv/)
 
 ### Installation
+
 1. Download the source code and place it in a folder of your choosing
 2. Open a terminal inside the folder and run the following command: `pipenv sync`
 3. Open up the pipenv shell: `pipenv shell`
