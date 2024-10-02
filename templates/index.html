@@ -10,28 +10,40 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
+    <h1>IRS E-File Providers for Individuals and Businesses</h1>
     <form action="{{ url_for('get_providers') }}" method="GET">
-      <label for="zipCode">Zip Code:</label>
-      <input type="text" id="zipCode" name="zipCode" /><br />
-      <label for="state">Select State:</label>
-      <select id="state" name="state">
-        {% for state in states %}
-        <option value="{{ state.value }}">
-          {{ state.name.replace('_', ' ').title() }}
-        </option>
-        {% endfor %}</select
-      ><br />
-      <input type="submit" value="Submit" />
+      <div>
+        <label for="zipCode">Enter Zip Code:</label>
+        <input type="text" id="zipCode" name="zipCode" /><br />
+      </div>
+      <div>
+        <label for="state">Select State:</label>
+        <select id="state" name="state">
+          {% for state in states %}
+          <option value="{{ state.value }}">
+            {{ state.name.replace('_', ' ').title() }}
+          </option>
+          {% endfor %}
+        </select>
+        <br />
+        <br />
+        <input type="submit" value="Search" />
+      </div>
     </form>
-    <br />
-    <label for="sort">Sort By:</label>
-    <select id="sort" name="sort">
-      <option value="zip">Zip Code</option>
-      <option value="name">Business Name</option>
-      <option value="contact">Point of Contact</option>
-    </select>
     {% if providers %}
-    <table border="1">
+    <br />
+    <div class="selector">
+      <label for="sort">Sort By:</label>
+      <select id="sort" name="sort">
+        <option value="bname">Business Name</option>
+        <option value="fname">First Name</option>
+        <option value="lname">Last Name</option>
+        <option value="zip">Zip Code</option>
+        <option value="phone">Phone Number</option>
+      </select>
+    </div>
+    <br />
+    <table>
       <thead>
         <tr>
           <th>Name of Business</th>
