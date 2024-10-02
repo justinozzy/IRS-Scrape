@@ -1,3 +1,5 @@
+from random import randint
+from time import sleep
 from urllib.request import urlopen
 from bs4 import BeautifulSoup, ResultSet
 from states import States
@@ -61,6 +63,9 @@ class IrsParser:
                 page += 1
             else:
                 searching = False
+
+            # Force a sleep of one to three seconds to avoid abusing server hardware (disable if your result count is low)
+            sleep(randint(1, 3))
 
         return self.provider_list
 
