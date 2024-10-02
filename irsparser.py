@@ -5,12 +5,12 @@ from states import States
 # Information gathered from https://www.irs.gov/e-file-providers/authorized-irs-e-file-providers-for-individuals
 # Below is the general sorting of how a business is displayed on the website, including capitalizations
 """
-Name of Business: Business Name
-Address: 1234 EXAMPLE ST
-City/State/ZIP: MY CITY, STATE *****
-Point of Contact: FIRST LAST
-Telephone: (***) ***-****
-Type of Service: Type Of Service
+[0] Name of Business: Business Name
+[1] Address: 1234 EXAMPLE ST
+[2] City/State/ZIP: MY CITY, STATE *****
+[3] Point of Contact: FIRST LAST
+[4] Telephone: (***) ***-****
+[5] Type of Service: Type Of Service
 """
 
 class IrsParser:
@@ -24,6 +24,9 @@ class IrsParser:
     Return type: BeautifulSoup (html of page with extra methods)
     """
     def get_url(self, zipCode:str, state:int, page:int) -> BeautifulSoup:
+        # IRS website uses numbering system (1 - 56) for states so have to use this hack for any state.
+        if (state == 0):
+            state = "All"
         url = "https://www.irs.gov/efile-index-taxpayer-search?zip={0}&state={1}&page={2}".format(zipCode, state, page)
         page = urlopen(url)
         html = page.read().decode("utf-8")
@@ -34,9 +37,9 @@ class IrsParser:
     Data is stored in a 2D array for easier access in the future since we can assign an index to a display field for the frontend.
     Return type: 2D List
     """
-    def get_efile_providers(self, zipCode, state:States) -> list:
+    def get_efile_providers(self, zipCode, state) -> list:
         # Reset list and set variables
-        provider_list = []
+        self.provider_list = []
         page = 0
         searching = True
 
@@ -44,7 +47,7 @@ class IrsParser:
         # This can be improved by getting the number of matching items from the string at the top of the page which will give
         # an exact amount and allow for multithreading. (I consider this out of scope for now)
         while searching:
-            soup = self.get_url(zipCode, state.value, page)
+            soup = self.get_url(zipCode, state, page)
             # All relevant information about e-file providers lies in <td> tags with the class attributes below so gather that html.
             for result_html in soup.find_all(attrs={"class":"views-field views-field-nothing-1 views-align-left"}):
                 temp_list = []
