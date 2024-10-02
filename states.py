@@ -1,6 +1,7 @@
 from enum import Enum
 
 class States(Enum):
+    ALL = 0
     ALABAMA = 1
     ALASKA = 2
     AMERICAN_SAMOA = 3
