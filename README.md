@@ -6,6 +6,7 @@ Gathers information from [IRS E-File providers](https://www.irs.gov/e-file-provi
 
 - [Python 3.12.7](https://www.python.org/downloads/release/python-3127/)
 - [Pipenv](https://pypi.org/project/pipenv/)
+> If you are installing on mac make sure to run the Install Certificates.command script in Python 3.12 folder
 
 ### Installation
 
@@ -13,7 +14,7 @@ Gathers information from [IRS E-File providers](https://www.irs.gov/e-file-provi
 2. Open a terminal inside the folder and run the following command: `pipenv sync`
 3. Open up the pipenv shell: `pipenv shell`
 4. Run the Flask application: `python3 main.py`
-5. Type `deactivate` or `exit` to leave the pipenv shell
+5. Type `exit` to leave the pipenv shell
 
 > 📝 **Randomized Sleep Intervals:** While retrieving data the code will sleep anywhere from a one to three second interval, be patient and your result will (eventually) show up.
 
