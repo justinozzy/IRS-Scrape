@@ -1,10 +1,13 @@
+from db import Database
 from irsparser import IrsParser
 from states import States
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-providers = IrsParser()
+database = Database()
+database.init_db()
+providers = IrsParser(database)
 
 """
 Index page for website, renders the basic elements when the page is first loaded.
@@ -37,15 +40,15 @@ def sort_providers():
     # Sorting logic - sorts based on whatever the value of x is from the provider list
     match sort_by:
         case 'bname':
-            sorted_providers = sorted(providers.provider_list, key=lambda x: x[0])
+            sorted_providers = sorted(providers.provider_list, key=lambda x: x[1])
         case 'zip':
-            sorted_providers = sorted(providers.provider_list, key=lambda x: x[2].split(" ")[-1])
+            sorted_providers = sorted(providers.provider_list, key=lambda x: x[3].split(" ")[-1])
         case 'fname':
-            sorted_providers = sorted(providers.provider_list, key=lambda x: x[3].split(" ")[0])
+            sorted_providers = sorted(providers.provider_list, key=lambda x: x[4].split(" ")[0])
         case 'lname':
-            sorted_providers = sorted(providers.provider_list, key=lambda x: x[3].split(" ")[1])
+            sorted_providers = sorted(providers.provider_list, key=lambda x: x[4].split(" ")[1])
         case 'phone':
-            sorted_providers = sorted(providers.provider_list, key=lambda x: x[4])
+            sorted_providers = sorted(providers.provider_list, key=lambda x: x[0])
         case _:
             # Default return
             sorted_providers = providers.provider_list
