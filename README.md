@@ -6,7 +6,9 @@ Gathers information from [IRS E-File providers](https://www.irs.gov/e-file-provi
 
 - [Python 3.12.7](https://www.python.org/downloads/release/python-3127/)
 - [Pipenv](https://pypi.org/project/pipenv/)
-> If you are installing on mac make sure to run the Install Certificates.command script in Python 3.12 folder
+- [SQLite3](https://www.sqlite.org/download.html)
+  > If you are installing on mac make sure to run the Install Certificates.command script in Python 3.12 folder
+  > For Ubuntu installation of sqlite3 run `sudo apt install sqlite3`
 
 ### Installation
 
